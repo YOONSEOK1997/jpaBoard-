@@ -1,0 +1,31 @@
+{{>layouts/header}}
+
+{{#msg}}
+	<div>
+	{{msg}}
+	</div>
+{{/msg}}
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Title</th>
+        <th scope="col">Content</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#board}}
+    <tr>
+        <th>{{boardNo}}</th>
+        <td>{{boardTitle}}</td>
+        <td>{{boardContent}}</td>
+    </tr>
+    {{/board}}
+    </tbody>
+</table>
+
+<a href="/board/modifyBoard?boardNo={{board.boardNo}}" class="btn btn-primary">Modify</a>
+<a href="/board/delete?boardNo={{board.boardNo}}" class="btn btn-danger">Delete</a>
+
+<a href="/articles">Go to Article List</a>
+{{>layouts/footer}}

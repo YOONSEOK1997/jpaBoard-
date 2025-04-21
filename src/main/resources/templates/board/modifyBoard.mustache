@@ -1,0 +1,24 @@
+{{>layouts/header}}
+
+<div class="container mt-5">
+    <h1 class="mb-4">게시글 수정</h1>
+
+    <form action="/board/update" method="post">
+        <input type="hidden" name="boardNo" value="{{board.boardNo}}" />
+
+        <div class="mb-3">
+            <label for="boardTitle" class="form-label">제목</label>
+            <input type="text" class="form-control" name="boardTitle" id="boardTitle" value="{{board.boardTitle}}" required />
+        </div>
+
+        <div class="mb-3">
+            <label for="boardContent" class="form-label">내용</label>
+            <textarea class="form-control" name="boardContent" id="boardContent" rows="6" required>{{board.boardContent}}</textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">수정</button>
+        <a href="/board/boardList" class="btn btn-secondary ms-2">뒤로가기</a>
+    </form>
+</div>
+
+{{>layouts/footer}}

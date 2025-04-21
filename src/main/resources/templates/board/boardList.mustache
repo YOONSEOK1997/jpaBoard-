@@ -1,0 +1,94 @@
+{{>layouts/header}}
+
+<body class="bg-light">
+
+    <div class="container my-5">
+
+        <!-- 페이지 타이틀 -->
+        <h1 class="mb-4 fw-bold text-primary">게시글 목록</h1>
+
+        <!-- 게시글 목록 테이블 -->
+        {{#msg}}
+        	<div>{{msg}}</div>
+        {{/msg}}
+        <table class="table table-hover table-bordered align-middle">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col" style="width: 10%;">번호</th>
+                    <th scope="col" style="width: 30%;">제목</th>
+                    <th scope="col">내용</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#list}}
+                <tr>
+                    <th>{{boardNo}}</th>
+                    <td><a href="/board/boardOne?boardNo={{boardNo}}" class="text-decoration-none text-dark">{{boardTitle}}</a></td>
+                    <td>{{boardContent}}</td>
+                </tr>
+                {{/list}}
+
+                {{^list}}
+                <tr>
+                    <td colspan="3" class="text-center text-muted">등록된 게시글이 없습니다.</td>
+                </tr>
+                {{/list}}
+            </tbody>
+        </table>
+
+        <!-- 페이지 정보 및 네비게이션 -->
+        <div class="d-flex justify-content-between align-items-center mt-4">
+
+            <!-- 첫 페이지 확인 -->
+           
+
+            <!-- 이전 페이지 버튼 -->
+            <div>
+                {{#list.hasPrevious}}
+                <a href="/board/boardList?currentPage={{prePage}}" class="btn btn-outline-primary btn-sm">이전 페이지</a>
+                {{/list.hasPrevious}}
+            </div>
+
+            <!-- 페이지 번호 -->
+            <div class="fw-bold">
+                페이지 <span class="text-primary">{{nextPage}}</span> / {{list.totalPages}}
+            </div>
+
+            <!-- 다음 페이지 버튼 -->
+            <div>
+                {{#list.hasNext}}
+                <a href="/board/boardList?currentPage={{nextPage}}" class="btn btn-outline-primary btn-sm">다음 페이지</a>
+                {{/list.hasNext}}
+            </div>
+
+        </div>
+
+        <!-- 검색 폼 -->
+        <div class="mt-4">
+            <form action="/board/boardList" method="get" class="d-flex" role="search">
+                <input class="form-control me-2" type="search" name="word" placeholder="검색어를 입력하세요" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">검색</button>
+            </form>
+        </div>
+
+        <!-- 페이지 하단 정보 -->
+        <div class="mt-3 text-muted">
+         <div>
+                {{#list.first}}
+                <span class="text-primary">첫 페이지입니다.</span>
+                {{/list.first}}
+            </div>
+            <p>전체 게시글 수: {{list.totalElements}}개</p>
+            <p>페이지당 게시글 수: {{list.size}}개</p>
+        </div>
+
+        <!-- 새 글쓰기 버튼 -->
+        <div class="text-end mt-4">
+            <a href="/board/addBoard" class="btn btn-primary">새 글쓰기</a>
+        </div>
+
+    </div>
+
+{{>layouts/footer}}
+
+</body>
