@@ -1,31 +1,36 @@
-{{>layouts/header}}
+{{> layouts/header }}
 
-{{#msg}}
-	<div>
-	{{msg}}
-	</div>
-{{/msg}}
-<table class="table">
-    <thead>
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Title</th>
-        <th scope="col">Content</th>
-    </tr>
-    </thead>
-    <tbody>
-    {{#article}}
-    <tr>
-        <th>{{id}}</th>
-        <td>{{title}}</td>
-        <td>{{content}}</td>
-    </tr>
-    {{/article}}
-    </tbody>
-</table>
+<div class="container mt-5">
+    {{#msg}}
+        <div class="alert alert-warning text-center">
+            {{msg}}
+        </div>
+    {{/msg}}
 
-<a href="/articles/edit?id={{article.id}}" class="btn btn-primary">Edit</a>
-<a href="/articles/delete?id={{article.id}}" class="btn btn-danger">Delete</a>
+    <div class="card shadow rounded-4 p-4">
+        <h3 class="mb-4">게시글 상세</h3>
 
-<a href="/articles">Go to Article List</a>
-{{>layouts/footer}}
+        <div class="mb-3">
+            <strong>ID:</strong>
+            <span class="ms-2">{{article.id}}</span>
+        </div>
+
+        <div class="mb-3">
+            <strong>제목:</strong>
+            <span class="ms-2">{{article.title}}</span>
+        </div>
+
+        <div class="mb-3">
+            <strong>내용:</strong>
+            <p class="mt-2">{{article.content}}</p>
+        </div>
+
+        <div class="mt-4 d-flex justify-content-end gap-2">
+            <a href="/articles/edit?id={{article.id}}" class="btn btn-outline-primary">수정</a>
+            <a href="/articles/delete?id={{article.id}}" class="btn btn-outline-danger">삭제</a>
+            <a href="/articles" class="btn btn-secondary">목록으로</a>
+        </div>
+    </div>
+</div>
+
+{{> layouts/footer }}

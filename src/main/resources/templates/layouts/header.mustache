@@ -12,22 +12,24 @@
 <!-- navigation -->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/">Navbar</a>
+        <a class="navbar-brand fw-bold" href="/">^_^</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                 aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
+
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <!-- 왼쪽 메뉴 -->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/articles/index">Article 목록</a>
+                    <a class="nav-link" href="/articles/index">Article</a>
                 </li>
-                 <li class="nav-item">
-                    <a class="nav-link" href="/board/boardList">Board 목록</a>
+                <li class="nav-item">
+                    <a class="nav-link" href="/board/boardList">Board</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
@@ -36,16 +38,35 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/articles/new">새 글쓰기</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li><a class="dropdown-item" href="#">메뉴1</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else</a></li>
+                        <li><a class="dropdown-item" href="#">메뉴2</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">비활성</a>
-                </li>
+                
             </ul>
-          
+
+            <!-- 오른쪽 로그인 영역 -->
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                {{#loginMember.memberId}}
+                    <li class="nav-item">
+                        <a>{{loginMember.memberId}}님 환영합니다</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/logout">로그아웃</a>
+                        
+                    </li>
+                {{/loginMember.memberId}}
+
+                {{^loginMember.memberId}}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/member/login">로그인</a>
+                    </li>
+                     <li class="nav-item">
+                        <a class="nav-link" href="/member/joinMember">회원가입</a>
+                    </li>
+                {{/loginMember.memberId}}
+            </ul>
         </div>
     </div>
 </nav>

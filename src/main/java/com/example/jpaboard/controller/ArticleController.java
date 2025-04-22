@@ -1,5 +1,7 @@
 package com.example.jpaboard.controller;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,6 +17,7 @@ import com.example.jpaboard.dto.ArticleForm;
 import com.example.jpaboard.entity.Article;
 import com.example.jpaboard.repository.ArticleRepository;
 
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -23,7 +26,14 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleRepository articleRepository;
-
+	
+	@GetMapping("/articles/sqlTest")
+	public String sqlTest(Model model) {
+		Map<String, Object>map = articleRepository.getMinMaxCount("a%");
+		/* Log.debug(map.toString()); */
+		model.addAttribute("map" , map);
+		return "articles/sqlTest";
+	}
 	@GetMapping("/articles/new")
 	public String newArticleForm() {
 		return "articles/new";
@@ -42,7 +52,7 @@ public class ArticleController {
 		articleRepository.save(entity);
 
 		/*
-		 * 작업 메서드 설명 save(entity) INSERT (또는 UPDATE) findById(id) ID로 1건 조회 findAll() 전체
+		 * save  (entity) INSERT (또는 UPDATE) findById(id) ID로 1건 조회 findAll() 전체
 		 * 조회 Update (수정) save(entity) ID가 존재하면 UPDATE Delete (삭제) 해당 엔티티 삭제 〃
 		 * deleteById(id) ID로 삭제
 		 */
@@ -90,7 +100,7 @@ public class ArticleController {
 	public String articleList(Model model,
 			@RequestParam(value= "word" ,defaultValue ="" ) String word, 
 			@RequestParam(value = "currentPage", defaultValue = "0") int currentPage,
-			@RequestParam(value = "rowPerPage", defaultValue = "10") int rowPerPage) {
+			@RequestParam(value = "rowPerPage", defaultValue = "6") int rowPerPage) {
 		Sort s1 = Sort.by("id").descending();
 		Sort s2 = Sort.by("title").ascending();
 		Sort sort  = s1.and(s2);
@@ -107,7 +117,7 @@ public class ArticleController {
 		 * Log.debug("list.getisFirst(): "+ list.isFirst());
 		 * Log.debug("list.hasNext(): "+ list.hasNext());
 		 */
-		model.addAttribute("word", word); 
+		//model.addAttribute("word", word); 
 		model.addAttribute("list", list);
 		model.addAttribute("prePage", (list.getNumber() > 0) ? list.getNumber() - 1 : 0);
 		model.addAttribute("nextPage" ,list.getNumber()+1 );

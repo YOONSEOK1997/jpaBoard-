@@ -1,19 +1,101 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<title>Welcome | Article Home</title>
+
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<style>
+html, body {
+	height: 100%;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+}
+
+main {
+	flex: 1;
+}
+
+.hero-section {
+	background: linear-gradient(to right, #e3f2fd, #bbdefb);
+	padding: 100px 20px;
+	text-align: center;
+}
+
+.hero-title {
+	font-size: 3rem;
+	font-weight: 700;
+}
+
+.hero-subtitle {
+	font-size: 1.25rem;
+	color: #555;
+}
+
+.card-icon {
+	font-size: 2rem;
+	color: #0d6efd;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease-in-out;
+}
+</style>
 </head>
-<body>
-	<!-- header.mustache include  -->
-	{{>layouts/header}}
-	{{loginName}}님 반갑습니다.
-	
-	<!-- footer.mustache -->
-	<div>
-		<a href="/articles/index">리스트</a>
-	</div>
+<body class="bg-light">
+{{>layouts/header}}
+	<main class="container my-5">
+		<!-- Hero Section -->
+		<div class="hero-section">
+			<div class="container">
+				<h1 class="hero-title">Welcome to Article Board</h1>
+				<p class="hero-subtitle">최신 뉴스 & 커뮤니티 </p>
+			
+			</div>
+		</div>
+
+		<!-- Features Section -->
+		<div class="container my-5">
+			<div class="row text-center">
+				<div class="col-md-4">
+					<a href="/articles/index" class="text-decoration-none text-dark">
+						<div class="card p-4 shadow-sm hover-shadow-sm">
+							<div class="card-icon mb-3">📰</div>
+							<h5 class="fw-bold">최신 기사</h5>
+							<p class="text-muted">기사들을 확인하세요.</p>
+						</div>
+					</a>
+				</div>
+				<div class="col-md-4">
+					<a href="/board/boardList" class="text-decoration-none text-dark">
+					<div class="card p-4 shadow-sm">
+						<div class="card-icon mb-3">📝</div>
+						<h5 class="fw-bold">게시판</h5>
+						<p class="text-muted">자유롭게 얘기해요.</p>
+					</div>
+						</a>
+				</div>
+				<div class="col-md-4">
+				<a href="/member/memberList" class="text-decoration-none text-dark">
+					<div class="card p-4 shadow-sm">
+						<div class="card-icon mb-3">🔍</div>
+						<h5 class="fw-bold">멤버 목록</h5>
+						<p class="text-muted">멤버들을 확인해요</p>
+					</div>
+					</a>
+				</div>
+			</div>
+		</div>
+
+
+
+	</main>
 	{{>layouts/footer}}
 </body>
 </html>

@@ -43,7 +43,7 @@ public class BoardController {
             return "redirect:/board/boardList"; // 게시글 없으면 목록으로
         }
         model.addAttribute("board", board);
-        return "board/modifyBoard";  // modify.mustache 또는 modify.jsp 호출
+        return "board/modifyBoard";  // modifyBoard.mustache 호출
     }
 
     // 수정 처리 (DB 업데이트)
@@ -107,7 +107,7 @@ public class BoardController {
 		/* model.addAttribute("word", word); */ //검색어를 뷰에 띄워줄 경우에 사용 
         model.addAttribute("list", list);
         model.addAttribute("prePage", (list.getNumber() > 0) ? list.getNumber() - 1 : 0);
-        model.addAttribute("nextPage", (list.getNumber() < list.getTotalPages() - 1) ? list.getNumber() + 1 : list.getNumber());  // 페이지 범위 체크 추가
+        model.addAttribute("nextPage", (list.getNumber() < list.getTotalPages() - 1) ? list.getNumber() + 1 : list.getNumber());  
 
         return "board/boardList";
     }

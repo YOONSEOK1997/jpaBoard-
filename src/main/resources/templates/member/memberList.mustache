@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>멤버 목록</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+    .member-header {
+      background-color: #ffffff;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      margin-bottom: 30px;
+    }
+    .member-card {
+      background-color: #ffffff;
+      padding: 15px 20px;
+      border-radius: 8px;
+      margin-bottom: 15px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+    .pagination-bar {
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container my-5">
+
+  <div class="member-header d-flex justify-content-between align-items-center">
+    <h2 class="fw-bold mb-0">멤버 목록</h2>
+    <div class="text-end">
+      <span class="me-3 text-muted">{{loginMember.memberId}}님 환영합니다.</span>
+      <a href="/member/logout" class="btn btn-sm btn-outline-primary">로그아웃</a>
+      <a href="/member/modifyMemberPw" class="btn btn-sm btn-outline-secondary ms-2">비밀번호 수정</a>
+       <a href="/member/delete" class="btn btn-sm btn-outline-danger">회원 탈퇴</a>
+    </div>
+  </div>
+
+  <!-- 카드형 게시글 목록 -->
+  <div class="list-group">
+    {{#list}}
+      <div class="member-card">
+        <div class="d-flex justify-content-between align-items-center">
+          <small class="text-muted">#{{memberNo}}</small>
+          <h5 class="mb-0 text-primary fw-bold">{{memberId}}</h5>
+        </div>
+      </div>
+    {{/list}}
+
+    {{^list}}
+      <div class="text-center text-muted py-4">등록된 회원이 없습니다.</div>
+    {{/list}}
+  </div>
+
+  <!-- 페이지 네비게이션 -->
+  <div class="d-flex justify-content-between align-items-center pagination-bar">
+    <div>
+      {{#list.hasPrevious}}
+        <a href="/member/memberList?currentPage={{prePage}}" class="btn btn-outline-primary btn-sm">← 이전 페이지</a>
+      {{/list.hasPrevious}}
+    </div>
+
+    <div class="fw-bold text-muted">
+      페이지 <span class="text-dark">{{nextPage}}</span> / {{list.totalPages}}
+    </div>
+
+    <div>
+      {{#list.hasNext}}
+        <a href="/member/memberList?currentPage={{nextPage}}" class="btn btn-outline-primary btn-sm">다음 페이지 →</a>
+      {{/list.hasNext}}
+    </div>
+  </div>
+
+  <!-- 검색창 -->
+  <div class="mt-4">
+    <form action="/member/memberList" method="get" class="input-group">
+      <input class="form-control" type="search" name="word" placeholder="검색어를 입력하세요">
+      <button class="btn btn-outline-success" type="submit">검색</button>
+    </form>
+  </div>
+
+</div>
+
+</body>
+</html>
