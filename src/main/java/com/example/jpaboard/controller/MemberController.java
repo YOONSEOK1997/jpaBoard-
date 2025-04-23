@@ -40,6 +40,7 @@ public class MemberController {
 
 		Page<Member> memberList = memberRepository.findByMemberIdContaining(word, pageable);
 		model.addAttribute("list", memberList);
+		model.addAttribute("currentPage", currentPage+1);
 		model.addAttribute("prePage", (memberList.getNumber() > 0) ? memberList.getNumber() - 1 : 0);
 		model.addAttribute("nextPage", (memberList.getNumber() < memberList.getTotalPages() - 1) ? memberList.getNumber() + 1 : memberList.getNumber());  
 		return "member/memberList";
@@ -108,58 +109,58 @@ public class MemberController {
 	}
 	@PostMapping("/member/modifyMemberPw")
 	public String modifyMemberPw(HttpSession session,
-	                             @RequestParam String currentPw,
-	                             @RequestParam String newPw,
-	                             @RequestParam String confirmPw,
-	                             RedirectAttributes rda) {
+			@RequestParam String currentPw,
+			@RequestParam String newPw,
+			@RequestParam String confirmPw,
+			RedirectAttributes rda) {
 
-	    Member loginMember = (Member) session.getAttribute("loginMember");
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
-	    // 로그인 안 되어 있으면 로그인 페이지로
-	    if (loginMember == null) {
-	        return "redirect:/member/login";
-	    }
+		// 로그인 안 되어 있으면 로그인 페이지로
+		if (loginMember == null) {
+			return "redirect:/member/login";
+		}
 
-	    // 현재 비밀번호 확인
-	    String encodedCurrentPw = SHA256Util.encoding(currentPw);
-	    if (!loginMember.getMemberPw().equals(encodedCurrentPw)) {
-	        rda.addFlashAttribute("msg", "현재 비밀번호가 일치하지 않습니다.");
-	        return "redirect:/member/modifyMemberPw";
-	    }
+		// 현재 비밀번호 확인
+		String encodedCurrentPw = SHA256Util.encoding(currentPw);
+		if (!loginMember.getMemberPw().equals(encodedCurrentPw)) {
+			rda.addFlashAttribute("msg", "현재 비밀번호가 일치하지 않습니다.");
+			return "redirect:/member/modifyMemberPw";
+		}
 
-	    // 새 비밀번호 확인
-	    if (!newPw.equals(confirmPw)) {
-	        rda.addFlashAttribute("msg", "새 비밀번호가 서로 일치하지 않습니다.");
-	        return "redirect:/member/modifyMemberPw";
-	    }
+		// 새 비밀번호 확인
+		if (!newPw.equals(confirmPw)) {
+			rda.addFlashAttribute("msg", "새 비밀번호가 서로 일치하지 않습니다.");
+			return "redirect:/member/modifyMemberPw";
+		}
 
-	    // 비밀번호 변경 및 저장
-	    loginMember.setMemberPw(SHA256Util.encoding(newPw));
-	    memberRepository.save(loginMember);
+		// 비밀번호 변경 및 저장
+		loginMember.setMemberPw(SHA256Util.encoding(newPw));
+		memberRepository.save(loginMember);
 
-	    // 로그아웃 시키고 다시 로그인 유도
-	    session.invalidate();
-	    rda.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 다시 로그인해주세요.");
-	    return "redirect:/member/login";
+		// 로그아웃 시키고 다시 로그인 유도
+		session.invalidate();
+		rda.addFlashAttribute("msg", "비밀번호가 변경되었습니다. 다시 로그인해주세요.");
+		return "redirect:/member/login";
 	}
 
 	// 회원탈퇴
-	 @GetMapping("/member/delete")
-	    public String deleteConfirmPage() {
-	        return "member/delete"; 
-	    }
+	@GetMapping("/member/delete")
+	public String deleteConfirmPage() {
+		return "member/delete"; 
+	}
 
-	    @PostMapping("/member/delete")
-	    public String deleteMember(HttpSession session, RedirectAttributes rttr) {
-	        Member loginMember = (Member) session.getAttribute("loginMember");
+	@PostMapping("/member/delete")
+	public String deleteMember(HttpSession session, RedirectAttributes rttr) {
+		Member loginMember = (Member) session.getAttribute("loginMember");
 
-	        if (loginMember != null) {
-	            memberRepository.delete(loginMember);
-	            session.invalidate();
-	            rttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다.");
-	        }
+		if (loginMember != null) {
+			memberRepository.delete(loginMember);
+			session.invalidate();
+			rttr.addFlashAttribute("msg", "정상적으로 탈퇴되었습니다.");
+		}
 
-	        return "redirect:/";
-	    }
+		return "redirect:/";
+	}
 
 }
